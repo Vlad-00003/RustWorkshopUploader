@@ -15,6 +15,9 @@ namespace RustWorkshopUploader
         public string ItemType;
 
         [JsonIgnore]
+        public string ItemIdString => ItemId.ToString(); 
+
+        [JsonIgnore]
         public string FilePath;
 
         [JsonIgnore]
