@@ -17,21 +17,31 @@ namespace RustWorkshopUploader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            DialogResult result = DialogResult.Retry;
-            while (result == DialogResult.Retry)
+            DialogResult result;
+            do
             {
                 try
                 {
                     SteamClient.Init(SdkAppId);
-                    Application.Run(new frmMain());
-                    return;
+                    result = DialogResult.OK;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    result = MessageBox.Show("Steam is not running!", "ERROR", MessageBoxButtons.RetryCancel,
-                        MessageBoxIcon.Error);
-                    //Process.Start("steam://");
+                    result = MessageBox.Show("Steam is not running!", "ERROR", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    if (result == DialogResult.Cancel)
+                    {
+                        return;
+                    }
                 }
+            } while (result == DialogResult.Retry);
+
+            try
+            {
+                Application.Run(new frmMain());
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Application error: {e}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -53,29 +53,26 @@ namespace RustWorkshopUploader
                     pictureBox2.Invalidate();
                     txtFolder.Text = open_dialog.FileName;
                     FileInfo file = new FileInfo(open_dialog.FileName);
-
-                    if (file != null)
-                    {
-                        string folder = $"{Directory.GetCurrentDirectory()}/CustomSkins/Skin_{Path.GetFileNameWithoutExtension(file.Name)}/";
-                        if (!Directory.Exists(folder))
-                            Directory.CreateDirectory(folder);
-                        if (File.Exists(folder + "icon.png"))
-                            File.Delete(folder + "icon.png");
-                        File.Copy(open_dialog.FileName, folder + "icon.png");
-                        if (File.Exists(folder + "icon_background.png"))
-                            File.Delete(folder + "icon_background.png");
-                        File.Copy(open_dialog.FileName, folder + "icon_background.png");
-                        _folderPath = folder;
-                        var dataPath = GetDataPath(_folderPath);
-                        Editing.FilePath = dataPath;
-                        if (File.Exists(dataPath))
-                            Editing = CustomSkin.FromFile(dataPath);
-                    }
+                    
+                    string folder = $"{Directory.GetCurrentDirectory()}/CustomSkins/Skin_{Path.GetFileNameWithoutExtension(file.Name)}/";
+                    if (!Directory.Exists(folder))
+                        Directory.CreateDirectory(folder);
+                    if (File.Exists(folder + "icon.png"))
+                        File.Delete(folder + "icon.png");
+                    File.Copy(open_dialog.FileName, folder + "icon.png");
+                    if (File.Exists(folder + "icon_background.png"))
+                        File.Delete(folder + "icon_background.png");
+                    File.Copy(open_dialog.FileName, folder + "icon_background.png");
+                    _folderPath = folder;
+                    var dataPath = GetDataPath(_folderPath);
+                    Editing.FilePath = dataPath;
+                    if (File.Exists(dataPath))
+                        Editing = CustomSkin.FromFile(dataPath);
+                    
                 }
                 catch
                 {
-                    DialogResult rezult = MessageBox.Show("Невозможно открыть выбранный файл",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Невозможно открыть выбранный файл","Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             UpdateTexts();
@@ -162,12 +159,7 @@ namespace RustWorkshopUploader
         }
 
         private string ManifestPath => _folderPath + Path.DirectorySeparatorChar + "manifest.txt";
-
-        private async Task<DialogResult> ShowMessage(string message)
-        {
-            return await Task.Run(() => MessageBox.Show(message));
-        }
-
+        
         private async void PublishToSteam()
         {
             ProgressBar.Value = 30;
@@ -179,7 +171,7 @@ namespace RustWorkshopUploader
                 .WithTitle(Editing.Title).WithTag("Version3").WithTag(Editing.ItemType).WithTag("Skin")
                 .WithPublicVisibility().WithDescription(Editing.Description);
             ProgressBar.Value = 40;
-            await ShowMessage("Publishing To Steam");
+            //await ShowMessage("Publishing To Steam");
             PublishResult publishResult = await editor.SubmitAsync();
             ProgressBar.Value = 50;
             ProgressBar.ForeColor = Color.Red;
@@ -187,24 +179,23 @@ namespace RustWorkshopUploader
             if (!publishResult.Success)
             {
                 ProgressBar.Value = 0;
-                await ShowMessage("Error: " + publishResult.Result);
+                 MessageBox.Show("Error: " + publishResult.Result,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
             else
             {
                 ProgressBar.Value = 75;
-                await ShowMessage("Published File: " + publishResult.FileId);
+               //await ShowMessage("Published File: " + publishResult.FileId);
             }
             Item? item = await SteamUGC.QueryFileAsync(publishResult.FileId);
             if (item == null)
             {
                 ProgressBar.Value = 0;
-
-                await ShowMessage("Error Retrieving item information!");
+                MessageBox.Show("Unable to retrieve information from steam ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 ProgressBar.Value = 100;
-                await ShowMessage("Success!");
+                //await ShowMessage("Success!");
                 Editing.Title = item.Value.Title;
                 Editing.Description = item.Value.Description;
                 Editing.ItemId = item.Value.Id;
