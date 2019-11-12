@@ -6,6 +6,8 @@ namespace RustWorkshopUploader
 {
     static class Program
     {
+        public static AppId RustAppId = 252490;
+        public static AppId SdkAppId = 391750;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -20,8 +22,7 @@ namespace RustWorkshopUploader
             {
                 try
                 {
-                    SteamClient.Init(252490);
-                    result = DialogResult.Cancel;
+                    SteamClient.Init(SdkAppId);
                     Application.Run(new frmMain());
                     return;
                 }

@@ -146,9 +146,9 @@ namespace RustWorkshopUploader
 
         private string ManifestPath => _folderPath + Path.DirectorySeparatorChar + "manifest.txt";
 
-        private async Task<DialogResult> ShowMessage(string message)
+        private async Task ShowMessage(string message)
         {
-            return await Task.Run(() => MessageBox.Show(message));
+            await Task.Run(() => MessageBox.Show(message));
         }
 
         private async void PublishToSteam()
@@ -156,7 +156,7 @@ namespace RustWorkshopUploader
             Editor editor = default(Editor);
             editor = Editing.ItemId == 0UL ? Editor.NewMicrotransactionFile : new Editor(Editing.ItemId);
 
-            editor = editor.WithContent(_folderPath).WithPreviewFile(_folderPath + Path.DirectorySeparatorChar+"icon_background.png")
+            editor = editor.ForAppId(Program.SdkAppId).WithContent(_folderPath).WithPreviewFile(_folderPath + Path.DirectorySeparatorChar+"icon_background.png")
                 .WithTitle(Editing.Title).WithTag("Version3").WithTag(Editing.ItemType).WithTag("Skin")
                 .WithPublicVisibility().WithDescription(Editing.Description);
 
