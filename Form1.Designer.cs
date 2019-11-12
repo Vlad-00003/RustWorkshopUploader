@@ -33,13 +33,12 @@ namespace RustWorkshopUploader
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.txtFolder = new System.Windows.Forms.TextBox();
             this.btnSelectFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnDo = new System.Windows.Forms.Button();
-            this.tooltipWorkshopID = new System.Windows.Forms.ToolTip(this.components);
             this.txtWorkshopDesc = new System.Windows.Forms.RichTextBox();
             this.txtWorkshopName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,6 +50,7 @@ namespace RustWorkshopUploader
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.txtWorkshopId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -95,6 +95,7 @@ namespace RustWorkshopUploader
             // 
             // btnDo
             // 
+            this.btnDo.Enabled = false;
             this.btnDo.Location = new System.Drawing.Point(273, 330);
             this.btnDo.Name = "btnDo";
             this.btnDo.Size = new System.Drawing.Size(242, 63);
@@ -105,6 +106,7 @@ namespace RustWorkshopUploader
             // 
             // txtWorkshopDesc
             // 
+            this.txtWorkshopDesc.Enabled = false;
             this.txtWorkshopDesc.Location = new System.Drawing.Point(273, 266);
             this.txtWorkshopDesc.Name = "txtWorkshopDesc";
             this.txtWorkshopDesc.Size = new System.Drawing.Size(242, 19);
@@ -114,6 +116,7 @@ namespace RustWorkshopUploader
             // 
             // txtWorkshopName
             // 
+            this.txtWorkshopName.Enabled = false;
             this.txtWorkshopName.Location = new System.Drawing.Point(273, 188);
             this.txtWorkshopName.Name = "txtWorkshopName";
             this.txtWorkshopName.Size = new System.Drawing.Size(242, 20);
@@ -149,6 +152,7 @@ namespace RustWorkshopUploader
             // 
             // txtItemType
             // 
+            this.txtItemType.Enabled = false;
             this.txtItemType.Location = new System.Drawing.Point(273, 227);
             this.txtItemType.Name = "txtItemType";
             this.txtItemType.Size = new System.Drawing.Size(242, 20);
@@ -157,13 +161,13 @@ namespace RustWorkshopUploader
             // 
             // txtWorkshopId
             // 
+            this.txtWorkshopId.Enabled = false;
             this.txtWorkshopId.Location = new System.Drawing.Point(273, 304);
             this.txtWorkshopId.Name = "txtWorkshopId";
-            this.txtWorkshopId.Size = new System.Drawing.Size(238, 20);
+            this.txtWorkshopId.Size = new System.Drawing.Size(208, 20);
             this.txtWorkshopId.TabIndex = 8;
             this.txtWorkshopId.ValueChanged += new System.EventHandler(this.txtWorkshopId_ValueChanged);
-            this.txtWorkshopId.Enter += new System.EventHandler(this.txtWorkshopId_MouseEnter);
-            this.txtWorkshopId.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txtWorkshopId_MouseDown);
+            this.txtWorkshopId.DoubleClick += new System.EventHandler(this.txtWorkshopId_DoubleClick);
             // 
             // pictureBox1
             // 
@@ -204,16 +208,27 @@ namespace RustWorkshopUploader
             // ProgressBar
             // 
             this.ProgressBar.Cursor = System.Windows.Forms.Cursors.No;
-            this.ProgressBar.Location = new System.Drawing.Point(12, 399);
+            this.ProgressBar.Location = new System.Drawing.Point(12, 397);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(503, 23);
             this.ProgressBar.TabIndex = 14;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(487, 304);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(28, 20);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "N";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 427);
+            this.ClientSize = new System.Drawing.Size(523, 423);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label6);
@@ -230,6 +245,9 @@ namespace RustWorkshopUploader
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSelectFolder);
             this.Controls.Add(this.txtFolder);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "Custom Rust Workshop Uploader";
             ((System.ComponentModel.ISupportInitialize)(this.txtWorkshopId)).EndInit();
@@ -247,7 +265,6 @@ namespace RustWorkshopUploader
         private Label label1;
         private Label label2;
         private Button btnDo;
-        private ToolTip tooltipWorkshopID;
         private RichTextBox txtWorkshopDesc;
         private TextBox txtWorkshopName;
         private Label label3;
@@ -259,6 +276,7 @@ namespace RustWorkshopUploader
         private Label label6;
         private PictureBox pictureBox2;
         private ProgressBar ProgressBar;
+        private Button button1;
     }
 }
 

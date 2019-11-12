@@ -14,6 +14,11 @@ namespace RustWorkshopUploader
         public ulong ItemId;
         public string ItemType;
 
+        public CustomSkin()
+        {
+            ItemType = "TShirt";
+        }
+
         [JsonIgnore]
         public string ItemIdString => ItemId.ToString(); 
 

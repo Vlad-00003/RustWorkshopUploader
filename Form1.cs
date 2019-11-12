@@ -4,126 +4,91 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Net;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RustWorkshopUploader
 {
     public partial class frmMain : Form
     {
-        private CustomSkin _editing;
-        private CustomSkin Editing
-        {
-            get => _editing ?? (_editing = new CustomSkin());
-            set => _editing = value;
-        }
+        private CustomSkin Editing;
         private string _folderPath;
         public frmMain()
         {
             InitializeComponent();
 
             txtWorkshopId.Maximum = ulong.MaxValue;
-            Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/CustomSkins/");
+            Directory.CreateDirectory(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "CustomSkins");
         }
 
+        private void SetStatus(bool editing)
+        {
+            txtWorkshopId.Enabled = editing;
+            txtWorkshopDesc.Enabled = editing;
+            txtWorkshopName.Enabled = editing;
+            txtItemType.Enabled = editing;
+            btnDo.Enabled = editing;
+            if (!editing)
+                pictureBox2.Image = Properties.Resources.picture_01_512;
+        }
+        private static Image FromFile(string path)
+        {
+            var bytes = File.ReadAllBytes(path);
+            var ms = new MemoryStream(bytes);
+            var img = Image.FromStream(ms);
+            return img;
+        }
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
-            Bitmap image;
-            txtWorkshopId.Value = 0;
-            txtWorkshopName.Text = "";
-            txtFolder.Text = "";
-            txtWorkshopDesc.Text = "";
-            txtItemType.Text = "";
-            OpenFileDialog open_dialog = new OpenFileDialog();
-            open_dialog.Filter = "Image Files(*.PNG)|*.PNG";
-            if (open_dialog.ShowDialog() == DialogResult.OK)
+            OpenFileDialog openDialog = new OpenFileDialog {Filter = "Image Files(*.PNG)|*.PNG"};
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
             {
+                Image image;
                 try
                 {
-                    image = new Bitmap(open_dialog.FileName);
-
-                    if (image.Width != 512 && image.Height != 512)
-                    {
-                        MessageBox.Show("Размер изображения должен быть 512x512", "Image size error!", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                        return;
-                    }
-                    pictureBox2.Image = image;
-                    pictureBox2.Invalidate();
-                    txtFolder.Text = open_dialog.FileName;
-                    FileInfo file = new FileInfo(open_dialog.FileName);
-                    
-                    string folder = $"{Directory.GetCurrentDirectory()}/CustomSkins/Skin_{Path.GetFileNameWithoutExtension(file.Name)}/";
-                    if (!Directory.Exists(folder))
-                        Directory.CreateDirectory(folder);
-                    if (File.Exists(folder + "icon.png"))
-                        File.Delete(folder + "icon.png");
-                    File.Copy(open_dialog.FileName, folder + "icon.png");
-                    if (File.Exists(folder + "icon_background.png"))
-                        File.Delete(folder + "icon_background.png");
-                    File.Copy(open_dialog.FileName, folder + "icon_background.png");
-                    _folderPath = folder;
-                    var dataPath = GetDataPath(_folderPath);
-                    Editing.FilePath = dataPath;
-                    if (File.Exists(dataPath))
-                        Editing = CustomSkin.FromFile(dataPath);
-                    
+                    image = FromFile(openDialog.FileName);
                 }
                 catch
                 {
-                    MessageBox.Show("Невозможно открыть выбранный файл","Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SetStatus(false);
+                    return;
                 }
+                if (image.Width != 512 && image.Height != 512)
+                {
+                    MessageBox.Show("Размер изображения должен быть 512x512", "Image size error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SetStatus(false);
+                    return;
+                }
+                pictureBox2.Image = image;
+                pictureBox2.Invalidate();
+
+                txtFolder.Text = openDialog.FileName;
+                _folderPath = string.Format("{1}{0}CustomSkins{0}Skin_{2}", Path.DirectorySeparatorChar,
+                    Directory.GetCurrentDirectory(), Path.GetFileNameWithoutExtension(openDialog.FileName));
+
+                if (!Directory.Exists(_folderPath))
+                    Directory.CreateDirectory(_folderPath);
+                if (File.Exists(_folderPath + "icon.png"))
+                    File.Delete(_folderPath + "icon.png");
+                File.Copy(openDialog.FileName, _folderPath + "icon.png");
+                
+                var dataPath = GetDataPath(_folderPath);
+                Editing = File.Exists(dataPath) ? CustomSkin.FromFile(dataPath) : new CustomSkin();
+                Editing.FilePath = dataPath;
+                SetStatus(true);
             }
             UpdateTexts();
         }
 
-        private void UpdateTexts()
-        {
-            txtWorkshopId.Value = Editing.ItemId;
-            txtWorkshopName.Text = Editing.Title;
-            txtWorkshopDesc.Text = Editing.Description;
-            txtItemType.Text = Editing.ItemType;
-            txtFolder.Text = _folderPath;
-        }
-
-        private void UpdateEditing()
-        {
-            ProgressBar.Value = 10;
-            Editing.ItemId = decimal.ToUInt64(txtWorkshopId.Value);
-            Editing.Title = txtWorkshopName.Text;
-            ProgressBar.Value = 15;
-            Editing.Description = txtWorkshopDesc.Text;
-            Editing.ItemType = txtItemType.Text;
-            _folderPath = txtFolder.Text;
-            ProgressBar.Value = 20;
-        }
-
+        
         private string GetDataPath(string path)
         {
             var folderName = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar);
             var projectName = Path.GetFileName(folderName);
             return Path.GetFullPath(Path.Combine(path, $"..\\{projectName}.data"));
         }
-
-        private void txtWorkshopId_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (txtWorkshopId.Text == "0") return;
-            if (ModifierKeys == Keys.Control)
-                Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + txtWorkshopId.Text);
-        }
-
-        private void txtWorkshopId_MouseEnter(object sender, EventArgs e)
-        {
-            tooltipWorkshopID.Show("Hold CONTROL and click to open workshop url", txtWorkshopId);
-        }
-
-        private void btnRecreate_Click(object sender, EventArgs e)
-        {
-            Editing.Clear();
-            txtWorkshopId.Value = 0ul;
-            Editing.Save();
-        }
+        
         private void btnDo_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(_folderPath))
@@ -154,60 +119,86 @@ namespace RustWorkshopUploader
             if (!File.Exists(ManifestPath))
                 File.WriteAllText(ManifestPath, Editing.ManifestText);
             ProgressBar.Value = 0;
-            UpdateEditing();
+
             PublishToSteam();
         }
 
         private string ManifestPath => _folderPath + Path.DirectorySeparatorChar + "manifest.txt";
-        
+
+        private void SetDoButtonState(bool locked)
+        {
+            if (locked)
+            {
+                btnDo.Enabled = false;
+                btnDo.Text = "Загрузка...";
+                return;
+            }
+            btnDo.Text = "ЗАГРУЗИТЬ";
+            btnDo.Enabled = true;
+        }
+
+
         private async void PublishToSteam()
         {
-            ProgressBar.Value = 30;
+            ProgressBar.Value = 0;
+            SetDoButtonState(true);
 
             Editor editor = default(Editor);
             editor = Editing.ItemId == 0UL ? Editor.NewMicrotransactionFile : new Editor(Editing.ItemId);
 
-            editor = editor.ForAppId(Program.RustAppId).WithContent(_folderPath).WithPreviewFile(_folderPath + Path.DirectorySeparatorChar + "icon_background.png")
+            ProgressBar.Value = 20;
+
+            editor = editor.ForAppId(Program.RustAppId).WithContent(_folderPath).WithPreviewFile(_folderPath + Path.DirectorySeparatorChar + "icon.png")
                 .WithTitle(Editing.Title).WithTag("Version3").WithTag(Editing.ItemType).WithTag("Skin")
                 .WithPublicVisibility().WithDescription(Editing.Description);
+
             ProgressBar.Value = 40;
-            //await ShowMessage("Publishing To Steam");
             PublishResult publishResult = await editor.SubmitAsync();
-            ProgressBar.Value = 50;
-            ProgressBar.ForeColor = Color.Red;
+            ProgressBar.Value = 60;
 
             if (!publishResult.Success)
             {
                 ProgressBar.Value = 0;
-                 MessageBox.Show("Error: " + publishResult.Result,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + publishResult.Result,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+
+                SetDoButtonState(false);
+                return;
             }
-            else
-            {
-                ProgressBar.Value = 75;
-               //await ShowMessage("Published File: " + publishResult.FileId);
-            }
+
+            ProgressBar.Value = 85;
+            
             Item? item = await SteamUGC.QueryFileAsync(publishResult.FileId);
             if (item == null)
             {
                 ProgressBar.Value = 0;
-                MessageBox.Show("Unable to retrieve information from steam ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to retrieve information from Steam ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SetDoButtonState(false);
+                return;
             }
-            else
-            {
-                ProgressBar.Value = 100;
-                //await ShowMessage("Success!");
-                Editing.Title = item.Value.Title;
-                Editing.Description = item.Value.Description;
-                Editing.ItemId = item.Value.Id;
-                Editing.Save();
-                UpdateTexts();
-                Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
-                btnDo.Text = "Загружено!";
-            }
+            
+            ProgressBar.Value = 100;
+            Editing.Title = item.Value.Title;
+            Editing.Description = item.Value.Description;
+            Editing.ItemId = item.Value.Id;
+            Editing.Save();
+            UpdateTexts();
+            Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
+            SetDoButtonState(false);
         }
 
         #region Field updates
-        
+
+        private bool _updating;
+        private void UpdateTexts()
+        {
+            _updating = true;
+            txtWorkshopId.Value = Editing.ItemId;
+            txtWorkshopName.Text = Editing.Title;
+            txtWorkshopDesc.Text = Editing.Description;
+            txtItemType.Text = Editing.ItemType;
+            txtFolder.Text = _folderPath;
+            _updating = false;
+        }
         private void txtWorkshopId_ValueChanged(object sender, EventArgs e)
         {
             if (txtWorkshopId.Value != 0)
@@ -220,25 +211,39 @@ namespace RustWorkshopUploader
                 txtWorkshopId.ForeColor = Color.Black;
                 txtWorkshopId.Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular);
             }
-
-            Editing.ItemId = decimal.ToUInt64(txtWorkshopId.Value);
+            if(!_updating)
+                Editing.ItemId = decimal.ToUInt64(txtWorkshopId.Value);
         }
 
         private void txtWorkshopDesc_TextChanged(object sender, EventArgs e)
         {
-            Editing.Description = txtWorkshopDesc.Text;
+            if (!_updating)
+                Editing.Description = txtWorkshopDesc.Text;
         }
 
         private void txtItemType_TextChanged(object sender, EventArgs e)
         {
-            Editing.ItemType = txtItemType.Text;
+            if (!_updating)
+                Editing.ItemType = txtItemType.Text;
         }
 
         private void txtWorkshopName_TextChanged(object sender, EventArgs e)
         {
-            Editing.Title = txtWorkshopName.Text;
+            if (!_updating)
+                Editing.Title = txtWorkshopName.Text;
         }
 
         #endregion
+
+        private void txtWorkshopId_DoubleClick(object sender, EventArgs e)
+        {
+            if (txtWorkshopId.Value == 0) return;
+            Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + txtWorkshopId.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtWorkshopId.Value = 0ul;
+        }
     }
 }
