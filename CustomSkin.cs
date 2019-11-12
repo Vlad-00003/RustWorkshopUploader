@@ -7,12 +7,16 @@ using Steamworks;
 
 namespace RustWorkshopUploader
 {
-    class CustomSkin
+    internal class CustomSkin
     {
-        public string Title;
         public string Description;
+
+        [JsonIgnore]
+        public string FilePath;
+
         public ulong ItemId;
         public string ItemType;
+        public string Title;
 
         public CustomSkin()
         {
@@ -20,10 +24,7 @@ namespace RustWorkshopUploader
         }
 
         [JsonIgnore]
-        public string ItemIdString => ItemId.ToString(); 
-
-        [JsonIgnore]
-        public string FilePath;
+        public string ItemIdString => ItemId.ToString();
 
         [JsonIgnore]
         public Skin.Manifest Manifest =>
@@ -53,7 +54,7 @@ namespace RustWorkshopUploader
 
         public void Save()
         {
-            File.WriteAllText(FilePath,ToString());
+            File.WriteAllText(FilePath, ToString());
         }
 
 
@@ -69,10 +70,11 @@ namespace RustWorkshopUploader
             catch (Exception ex)
             {
                 skin = new CustomSkin();
-                MessageBox.Show($"Failed to Deserialize file {path} as CustomSkin!\n{ex}", "ERROR", MessageBoxButtons.OK,
+                MessageBox.Show($"Failed to Deserialize file {path} as CustomSkin!\n{ex}", "ERROR",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-           
+
             skin.FilePath = path;
             return skin;
         }

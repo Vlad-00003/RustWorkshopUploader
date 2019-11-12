@@ -4,19 +4,20 @@ using Steamworks;
 
 namespace RustWorkshopUploader
 {
-    static class Program
+    internal static class Program
     {
         public static AppId RustAppId = 252490;
         public static AppId SdkAppId = 391750;
+
         /// <summary>
-        /// Главная точка входа для приложения.
+        ///     Главная точка входа для приложения.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+
             DialogResult result;
             do
             {
@@ -27,11 +28,10 @@ namespace RustWorkshopUploader
                 }
                 catch (Exception)
                 {
-                    result = MessageBox.Show("Steam is not running!", "ERROR", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    result = MessageBox.Show("Steam is not running!", "ERROR", MessageBoxButtons.RetryCancel,
+                        MessageBoxIcon.Error);
                     if (result == DialogResult.Cancel)
-                    {
                         return;
-                    }
                 }
             } while (result == DialogResult.Retry);
 
