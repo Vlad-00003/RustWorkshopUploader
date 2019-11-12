@@ -65,7 +65,8 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
@@ -127,7 +128,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="favicon.ico" />
+    <None Include="Images\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\picture-01-512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

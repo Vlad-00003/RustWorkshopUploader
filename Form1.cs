@@ -22,28 +22,10 @@ namespace RustWorkshopUploader
         public frmMain()
         {
             InitializeComponent();
-            pictureBox1.Image = getImageFromURL("https://i.imgur.com/jokpDbK.png");
-            pictureBox2.Image = getImageFromURL("https://i.imgur.com/obe6jvH.png");
-
 
             txtWorkshopId.Maximum = ulong.MaxValue;
             Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/CustomSkins/");
         }
-
-        void client_DownloadProgress(object sender, DownloadProgressChangedEventArgs e)
-        {
-            this.BeginInvoke((MethodInvoker)delegate
-            {
-                double bytesIn = double.Parse(e.BytesReceived.ToString());
-                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-                double percentage = bytesIn / totalBytes * 100;
-            });
-        }
-
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-        }
-
 
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
@@ -233,6 +215,8 @@ namespace RustWorkshopUploader
             }
         }
 
+        #region Field updates
+        
         private void txtWorkshopId_ValueChanged(object sender, EventArgs e)
         {
             if (txtWorkshopId.Value != 0)
@@ -264,50 +248,6 @@ namespace RustWorkshopUploader
             Editing.Title = txtWorkshopName.Text;
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtFolder_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void ProgressBar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public Bitmap getImageFromURL(string sURL)
-        {
-            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(sURL);
-            Request.Method = "GET";
-            Request.UseDefaultCredentials = true;
-
-            HttpWebResponse Response = (HttpWebResponse)Request.GetResponse();
-            Bitmap bmp = new Bitmap(Response.GetResponseStream());
-            Response.Close();
-            return bmp;
-        }
+        #endregion
     }
 }

@@ -64,7 +64,6 @@ namespace RustWorkshopUploader
             this.txtFolder.ReadOnly = true;
             this.txtFolder.Size = new System.Drawing.Size(348, 20);
             this.txtFolder.TabIndex = 0;
-            this.txtFolder.TextChanged += new System.EventHandler(this.txtFolder_TextChanged);
             // 
             // btnSelectFolder
             // 
@@ -147,7 +146,6 @@ namespace RustWorkshopUploader
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 2;
             this.label5.Text = "Item Type:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // txtItemType
             // 
@@ -170,6 +168,7 @@ namespace RustWorkshopUploader
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Image = global::RustWorkshopUploader.Properties.Resources.logo;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(8, 13);
             this.pictureBox1.Name = "pictureBox1";
@@ -177,7 +176,6 @@ namespace RustWorkshopUploader
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // label6
             // 
@@ -189,12 +187,12 @@ namespace RustWorkshopUploader
             this.label6.TabIndex = 12;
             this.label6.Text = "РАЗРАБОТЧИК: Vlad-00003 \r\nЧто то добавил OxideBro";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.ErrorImage = null;
+            this.pictureBox2.Image = global::RustWorkshopUploader.Properties.Resources.picture_01_512;
             this.pictureBox2.InitialImage = null;
             this.pictureBox2.Location = new System.Drawing.Point(35, 172);
             this.pictureBox2.Name = "pictureBox2";
@@ -202,7 +200,6 @@ namespace RustWorkshopUploader
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 13;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // ProgressBar
             // 
@@ -211,7 +208,6 @@ namespace RustWorkshopUploader
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(503, 23);
             this.ProgressBar.TabIndex = 14;
-            this.ProgressBar.Click += new System.EventHandler(this.ProgressBar_Click);
             // 
             // frmMain
             // 
@@ -236,7 +232,6 @@ namespace RustWorkshopUploader
             this.Controls.Add(this.txtFolder);
             this.Name = "frmMain";
             this.Text = "Custom Rust Workshop Uploader";
-            this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtWorkshopId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
