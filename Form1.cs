@@ -134,25 +134,11 @@ namespace RustWorkshopUploader
 
             PublishToSteam();
         }
-
-        private void SetDoButtonState(bool locked)
-        {
-            if (locked)
-            {
-                btnDo.Enabled = false;
-                btnDo.Text = "Загрузка...";
-                return;
-            }
-
-            btnDo.Text = "ЗАГРУЗИТЬ";
-            btnDo.Enabled = true;
-        }
-
-
+        
         private async void PublishToSteam()
         {
             ProgressBar.Value = 0;
-            SetDoButtonState(true);
+            SetStatus(false);
 
             var editor = default(Editor);
             editor = Editing.ItemId == 0UL ? Editor.NewMicrotransactionFile : new Editor(Editing.ItemId);
@@ -172,8 +158,7 @@ namespace RustWorkshopUploader
             {
                 ProgressBar.Value = 0;
                 MessageBox.Show("Error: " + publishResult.Result, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                SetDoButtonState(false);
+                SetStatus(true);
                 return;
             }
 
@@ -185,7 +170,7 @@ namespace RustWorkshopUploader
                 ProgressBar.Value = 0;
                 MessageBox.Show("Unable to retrieve information from Steam ", "ERROR", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                SetDoButtonState(false);
+                SetStatus(true);
                 return;
             }
 
@@ -267,5 +252,18 @@ namespace RustWorkshopUploader
         }
 
         #endregion
+
+        private void btnDo_EnabledChanged(object sender, EventArgs e)
+        {
+            if (btnDo.Enabled && Editing != null)
+            {
+                if (Editing.ItemId > 0)
+                    btnDo.Text = "ОБНОВИТЬ";
+                else
+                    btnDo.Text = "ЗАГРУЗИТЬ";
+                return;
+            }
+            btnDo.Text = "ЗАГРУЗКА...";
+        }
     }
 }
