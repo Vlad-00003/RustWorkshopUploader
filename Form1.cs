@@ -131,7 +131,6 @@ namespace RustWorkshopUploader
 
             if (!File.Exists(ManifestPath))
                 File.WriteAllText(ManifestPath, Editing.ManifestText);
-            ProgressBar.Value = 0;
 
             PublishToSteam();
         }
