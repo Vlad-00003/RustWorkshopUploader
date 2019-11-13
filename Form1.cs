@@ -79,9 +79,9 @@ namespace RustWorkshopUploader
 
             if (!Directory.Exists(_folderPath))
                 Directory.CreateDirectory(_folderPath);
-            if (File.Exists(_folderPath + "icon.png"))
-                File.Delete(_folderPath + "icon.png");
-            File.Copy(openDialog.FileName, _folderPath + "icon.png");
+            if (File.Exists(_folderPath + Path.DirectorySeparatorChar + "icon.png"))
+                File.Delete(_folderPath + Path.DirectorySeparatorChar + "icon.png");
+            File.Copy(openDialog.FileName, _folderPath + Path.DirectorySeparatorChar + "icon.png");
 
             var dataPath = GetDataPath(_folderPath);
             Editing = File.Exists(dataPath) ? CustomSkin.FromFile(dataPath) : new CustomSkin();
