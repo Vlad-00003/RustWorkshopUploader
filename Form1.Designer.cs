@@ -71,18 +71,18 @@ namespace RustWorkshopUploader
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(106, 20);
             this.btnSelectFolder.TabIndex = 1;
-            this.btnSelectFolder.Text = "Select";
+            this.btnSelectFolder.Text = "Выбрать";
             this.btnSelectFolder.UseVisualStyleBackColor = true;
             this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 145);
+            this.label1.Location = new System.Drawing.Point(10, 145);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Image";
+            this.label1.Text = "Папка:";
             // 
             // label2
             // 
@@ -102,6 +102,7 @@ namespace RustWorkshopUploader
             this.btnDo.TabIndex = 5;
             this.btnDo.Text = "ЗАГРУЗИТЬ";
             this.btnDo.UseVisualStyleBackColor = true;
+            this.btnDo.EnabledChanged += new System.EventHandler(this.btnDo_EnabledChanged);
             this.btnDo.Click += new System.EventHandler(this.btnDo_Click);
             // 
             // txtWorkshopDesc
@@ -215,6 +216,7 @@ namespace RustWorkshopUploader
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(487, 304);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(28, 20);

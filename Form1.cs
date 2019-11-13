@@ -31,6 +31,7 @@ namespace RustWorkshopUploader
             txtWorkshopName.Enabled = editing;
             txtItemType.Enabled = editing;
             btnDo.Enabled = editing;
+            button1.Enabled = editing;
             if (!editing)
                 pictureBox2.Image = Resources.picture_01_512;
         }
@@ -180,8 +181,11 @@ namespace RustWorkshopUploader
             Editing.ItemId = item.Value.Id;
             Editing.Save();
             UpdateTexts();
-            Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
-            SetDoButtonState(false);
+            var result = MessageBox.Show("Файл успешно загружен в мастерскую!\nОткрыть ссылку в браузере?", "УСПЕШНО", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            if(result == DialogResult.Yes)
+                Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
+            SetStatus(true);
         }
 
         private void txtWorkshopId_DoubleClick(object sender, EventArgs e)
