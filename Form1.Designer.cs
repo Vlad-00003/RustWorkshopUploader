@@ -83,11 +83,12 @@ namespace RustWorkshopUploader
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Папка:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(270, 288);
+            this.label2.Location = new System.Drawing.Point(266, 298);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 13);
             this.label2.TabIndex = 3;
@@ -96,7 +97,7 @@ namespace RustWorkshopUploader
             // btnDo
             // 
             this.btnDo.Enabled = false;
-            this.btnDo.Location = new System.Drawing.Point(273, 330);
+            this.btnDo.Location = new System.Drawing.Point(269, 340);
             this.btnDo.Name = "btnDo";
             this.btnDo.Size = new System.Drawing.Size(242, 63);
             this.btnDo.TabIndex = 5;
@@ -108,7 +109,7 @@ namespace RustWorkshopUploader
             // txtWorkshopDesc
             // 
             this.txtWorkshopDesc.Enabled = false;
-            this.txtWorkshopDesc.Location = new System.Drawing.Point(273, 266);
+            this.txtWorkshopDesc.Location = new System.Drawing.Point(269, 276);
             this.txtWorkshopDesc.Name = "txtWorkshopDesc";
             this.txtWorkshopDesc.Size = new System.Drawing.Size(242, 19);
             this.txtWorkshopDesc.TabIndex = 6;
@@ -118,7 +119,7 @@ namespace RustWorkshopUploader
             // txtWorkshopName
             // 
             this.txtWorkshopName.Enabled = false;
-            this.txtWorkshopName.Location = new System.Drawing.Point(273, 188);
+            this.txtWorkshopName.Location = new System.Drawing.Point(269, 198);
             this.txtWorkshopName.Name = "txtWorkshopName";
             this.txtWorkshopName.Size = new System.Drawing.Size(242, 20);
             this.txtWorkshopName.TabIndex = 7;
@@ -127,7 +128,7 @@ namespace RustWorkshopUploader
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(270, 172);
+            this.label3.Location = new System.Drawing.Point(266, 182);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 2;
@@ -136,7 +137,7 @@ namespace RustWorkshopUploader
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(270, 250);
+            this.label4.Location = new System.Drawing.Point(266, 260);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 13);
             this.label4.TabIndex = 2;
@@ -145,7 +146,7 @@ namespace RustWorkshopUploader
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(270, 211);
+            this.label5.Location = new System.Drawing.Point(266, 221);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 2;
@@ -154,7 +155,7 @@ namespace RustWorkshopUploader
             // txtItemType
             // 
             this.txtItemType.Enabled = false;
-            this.txtItemType.Location = new System.Drawing.Point(273, 227);
+            this.txtItemType.Location = new System.Drawing.Point(269, 237);
             this.txtItemType.Name = "txtItemType";
             this.txtItemType.Size = new System.Drawing.Size(242, 20);
             this.txtItemType.TabIndex = 7;
@@ -163,7 +164,7 @@ namespace RustWorkshopUploader
             // txtWorkshopId
             // 
             this.txtWorkshopId.Enabled = false;
-            this.txtWorkshopId.Location = new System.Drawing.Point(273, 304);
+            this.txtWorkshopId.Location = new System.Drawing.Point(269, 314);
             this.txtWorkshopId.Name = "txtWorkshopId";
             this.txtWorkshopId.Size = new System.Drawing.Size(208, 20);
             this.txtWorkshopId.TabIndex = 8;
@@ -186,12 +187,13 @@ namespace RustWorkshopUploader
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(52, 367);
+            this.label6.Location = new System.Drawing.Point(52, 377);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(145, 26);
+            this.label6.Size = new System.Drawing.Size(130, 26);
             this.label6.TabIndex = 12;
-            this.label6.Text = "РАЗРАБОТЧИК: Vlad-00003 \r\nЧто то добавил OxideBro";
+            this.label6.Text = "Разработка RustPlugin.ru\r\nVlad-00003 | OxideBro";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // pictureBox2
             // 
@@ -199,17 +201,18 @@ namespace RustWorkshopUploader
             this.pictureBox2.ErrorImage = null;
             this.pictureBox2.Image = global::RustWorkshopUploader.Properties.Resources.picture_01_512;
             this.pictureBox2.InitialImage = null;
-            this.pictureBox2.Location = new System.Drawing.Point(35, 172);
+            this.pictureBox2.Location = new System.Drawing.Point(35, 182);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(194, 194);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 13;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // ProgressBar
             // 
             this.ProgressBar.Cursor = System.Windows.Forms.Cursors.No;
-            this.ProgressBar.Location = new System.Drawing.Point(12, 397);
+            this.ProgressBar.Location = new System.Drawing.Point(8, 414);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(503, 23);
             this.ProgressBar.TabIndex = 14;
@@ -217,7 +220,7 @@ namespace RustWorkshopUploader
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(487, 304);
+            this.button1.Location = new System.Drawing.Point(483, 314);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(28, 20);
             this.button1.TabIndex = 15;
@@ -229,7 +232,8 @@ namespace RustWorkshopUploader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 423);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            base.ClientSize = new System.Drawing.Size(523, 447);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.pictureBox2);
@@ -251,7 +255,9 @@ namespace RustWorkshopUploader
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmMain";
-            this.Text = "Custom Rust Workshop Uploader";
+            this.Text = "RustPlugin.ru | Custom Rust Workshop Uploader";
+            base.FormClosed += new global::System.Windows.Forms.FormClosedEventHandler(this.Closed);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtWorkshopId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

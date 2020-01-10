@@ -32,8 +32,6 @@ namespace RustWorkshopUploader
             txtItemType.Enabled = editing;
             btnDo.Enabled = editing;
             button1.Enabled = editing;
-            if (!editing)
-                pictureBox2.Image = Resources.picture_01_512;
         }
 
         private static Image FromFile(string path)
@@ -267,6 +265,33 @@ namespace RustWorkshopUploader
                 return;
             }
             btnDo.Text = "ЗАГРУЗКА...";
+        }
+        private new void Closed(object sender, FormClosedEventArgs e)
+        {
+            if (MessageBox.Show("Мы занимаемся разработкой приватных плагинов, так же и продаем их. Хотите посетить сайт нашего сообщества?", "Выгодное предложение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Process.Start("https://rustplugin.ru");
+            }
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
