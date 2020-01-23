@@ -52,6 +52,7 @@ namespace RustWorkshopUploader
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.browseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,6 +171,7 @@ namespace RustWorkshopUploader
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.browseToolStripMenuItem,
+            this.newUploadToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
@@ -178,6 +180,13 @@ namespace RustWorkshopUploader
             // 
             this.browseToolStripMenuItem.Name = "browseToolStripMenuItem";
             resources.ApplyResources(this.browseToolStripMenuItem, "browseToolStripMenuItem");
+            this.browseToolStripMenuItem.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            // 
+            // newUploadToolStripMenuItem
+            // 
+            this.newUploadToolStripMenuItem.Name = "newUploadToolStripMenuItem";
+            resources.ApplyResources(this.newUploadToolStripMenuItem, "newUploadToolStripMenuItem");
+            this.newUploadToolStripMenuItem.Click += new System.EventHandler(this.button1_Click);
             // 
             // quitToolStripMenuItem
             // 
@@ -272,6 +281,7 @@ namespace RustWorkshopUploader
         private ToolStripMenuItem englishToolStripMenuItem;
         private ToolStripMenuItem russianToolStripMenuItem;
         private ToolStripMenuItem infoToolStripMenuItem;
+        private ToolStripMenuItem newUploadToolStripMenuItem;
     }
 }
 

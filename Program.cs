@@ -1,10 +1,10 @@
-﻿using RustWorkshopUploader.Localization;
-using Steamworks;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using RustWorkshopUploader.Localization;
 using RustWorkshopUploader.Properties;
+using Steamworks;
 
 namespace RustWorkshopUploader
 {
@@ -40,7 +40,8 @@ namespace RustWorkshopUploader
                 }
                 catch (Exception)
                 {
-                    result = MessageBox.Show(strings.SteamNotFound, strings.Message_Error, MessageBoxButtons.RetryCancel,
+                    result = MessageBox.Show(strings.SteamNotFound, strings.Message_Error,
+                        MessageBoxButtons.RetryCancel,
                         MessageBoxIcon.Error);
                     if (result == DialogResult.Cancel)
                         return;
@@ -53,7 +54,8 @@ namespace RustWorkshopUploader
             }
             catch (Exception e)
             {
-                MessageBox.Show(string.Format(strings.AppError, e), strings.Message_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(strings.AppError, e), strings.Message_Error, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }

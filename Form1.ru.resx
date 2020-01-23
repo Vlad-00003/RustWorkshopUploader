@@ -161,14 +161,11 @@
     <value>Разработано RustPlugin.ru
 Vlad-00003 | OxideBro</value>
   </data>
-  <data name="browseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
   <data name="browseToolStripMenuItem.Text" xml:space="preserve">
     <value>Обзор</value>
   </data>
-  <data name="quitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="newUploadToolStripMenuItem.Text" xml:space="preserve">
+    <value>Новый ID</value>
   </data>
   <data name="quitToolStripMenuItem.Text" xml:space="preserve">
     <value>Выход</value>

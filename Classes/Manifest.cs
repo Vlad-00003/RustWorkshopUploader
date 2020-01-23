@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RustWorkshopUploader.Classes
 {
-    class Manifest
+    internal class Manifest
     {
         public int Version { get; set; }
 
@@ -15,18 +15,11 @@ namespace RustWorkshopUploader.Classes
 
         public Group[] Groups { get; set; }
 
-        public Manifest WithData(DateTime publishDate, ulong authorId)
-        {
-            this.PublishDate = publishDate;
-            this.AuthorId = authorId;
-            return this;
-        }
-
         public static Manifest DefaultManifest => new Manifest
         {
             Version = 3,
             ItemType = "CustomItem",
-            Groups = new Group[]
+            Groups = new[]
             {
                 new Group
                 {
@@ -50,6 +43,13 @@ namespace RustWorkshopUploader.Classes
                 }
             }
         };
+
+        public Manifest WithData(DateTime publishDate, ulong authorId)
+        {
+            PublishDate = publishDate;
+            AuthorId = authorId;
+            return this;
+        }
 
         public class Group
         {

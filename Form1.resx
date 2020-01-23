@@ -261,7 +261,7 @@
     <value>6</value>
   </data>
   <data name="txtWorkshopDesc.Text" xml:space="preserve">
-    <value />
+    <value>Initial Upload</value>
   </data>
   <data name="&gt;&gt;txtWorkshopDesc.Name" xml:space="preserve">
     <value>txtWorkshopDesc</value>
@@ -286,6 +286,9 @@
   </data>
   <data name="txtWorkshopName.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
+  </data>
+  <data name="txtWorkshopName.Text" xml:space="preserve">
+    <value>Custom Item</value>
   </data>
   <data name="&gt;&gt;txtWorkshopName.Name" xml:space="preserve">
     <value>txtWorkshopName</value>
@@ -520,48 +523,6 @@ Vlad-00003 | OxideBro</value>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="browseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="browseToolStripMenuItem.Text" xml:space="preserve">
-    <value>Browse</value>
-  </data>
-  <data name="quitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="quitToolStripMenuItem.Text" xml:space="preserve">
-    <value>Quit</value>
-  </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="englishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 22</value>
-  </data>
-  <data name="englishToolStripMenuItem.Text" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="russianToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 22</value>
-  </data>
-  <data name="russianToolStripMenuItem.Text" xml:space="preserve">
-    <value>Russian</value>
-  </data>
-  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 20</value>
-  </data>
-  <data name="languageToolStripMenuItem.Text" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="infoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 20</value>
-  </data>
-  <data name="infoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Info</value>
-  </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -586,6 +547,54 @@ Vlad-00003 | OxideBro</value>
   <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="browseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="browseToolStripMenuItem.Text" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="newUploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="newUploadToolStripMenuItem.Text" xml:space="preserve">
+    <value>New ID</value>
+  </data>
+  <data name="quitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="quitToolStripMenuItem.Text" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 20</value>
+  </data>
+  <data name="languageToolStripMenuItem.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="englishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 22</value>
+  </data>
+  <data name="englishToolStripMenuItem.Text" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="russianToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 22</value>
+  </data>
+  <data name="russianToolStripMenuItem.Text" xml:space="preserve">
+    <value>Russian</value>
+  </data>
+  <data name="infoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 20</value>
+  </data>
+  <data name="infoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -608,6 +617,12 @@ Vlad-00003 | OxideBro</value>
     <value>browseToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;browseToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;newUploadToolStripMenuItem.Name" xml:space="preserve">
+    <value>newUploadToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;newUploadToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;quitToolStripMenuItem.Name" xml:space="preserve">

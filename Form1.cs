@@ -1,14 +1,14 @@
-﻿using RustWorkshopUploader.Classes;
-using RustWorkshopUploader.Localization;
-using RustWorkshopUploader.Properties;
-using Steamworks;
-using Steamworks.Ugc;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
+using RustWorkshopUploader.Classes;
+using RustWorkshopUploader.Localization;
+using RustWorkshopUploader.Properties;
+using Steamworks;
+using Steamworks.Ugc;
 
 namespace RustWorkshopUploader
 {
@@ -127,7 +127,7 @@ namespace RustWorkshopUploader
 
             PublishToSteam();
         }
-        
+
         private async void PublishToSteam()
         {
             ProgressBar.Value = 0;
@@ -150,7 +150,8 @@ namespace RustWorkshopUploader
             if (!publishResult.Success)
             {
                 ProgressBar.Value = 0;
-                MessageBox.Show(string.Format(strings.ErrorText, publishResult.Result), strings.Message_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(strings.ErrorText, publishResult.Result), strings.Message_Error,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SetStatus(true);
                 return;
             }
@@ -175,7 +176,7 @@ namespace RustWorkshopUploader
             UpdateTexts();
             var result = MessageBox.Show(strings.Publish_OpenBrowser, strings.Message_Success, MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
                 Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
             SetStatus(true);
         }
@@ -190,6 +191,43 @@ namespace RustWorkshopUploader
         {
             txtWorkshopId.Value = 0ul;
             btnDo.Text = strings.BtnDo_Upload;
+        }
+
+        private void btnDo_EnabledChanged(object sender, EventArgs e)
+        {
+            if (btnDo.Enabled && Editing != null)
+            {
+                if (Editing.ItemId > 0)
+                    btnDo.Text = strings.BtnDo_Update;
+                else
+                    btnDo.Text = strings.BtnDo_Upload;
+                return;
+            }
+
+            btnDo.Text = strings.BtnDo_Uploading;
+        }
+
+        private new void Closed(object sender, FormClosedEventArgs e)
+        {
+#if !DEBUG
+            if (MessageBox.Show(strings.AdvMessage, strings.AdvMessage_Title, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Process.Start("https://rustplugin.ru");
+            }
+#endif
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings.Default.Culture =
+                sender == englishToolStripMenuItem ? new CultureInfo("en") : new CultureInfo("ru");
+            Settings.Default.Save();
+            Application.Restart();
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         #region Field updates
@@ -233,7 +271,7 @@ namespace RustWorkshopUploader
             if (!_updating)
                 Editing.Description = txtWorkshopDesc.Text;
         }
-        
+
         private void txtWorkshopName_TextChanged(object sender, EventArgs e)
         {
             if (!_updating)
@@ -241,39 +279,5 @@ namespace RustWorkshopUploader
         }
 
         #endregion
-
-        private void btnDo_EnabledChanged(object sender, EventArgs e)
-        {
-            if (btnDo.Enabled && Editing != null)
-            {
-                if (Editing.ItemId > 0)
-                    btnDo.Text = strings.BtnDo_Update;
-                else
-                    btnDo.Text = strings.BtnDo_Upload;
-                return;
-            }
-            btnDo.Text = strings.BtnDo_Uploading;
-        }
-        private new void Closed(object sender, FormClosedEventArgs e)
-        {
-#if !DEBUG
-            if (MessageBox.Show(strings.AdvMessage, strings.AdvMessage_Title, MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Process.Start("https://rustplugin.ru");
-            }
-#endif
-        }
-        
-        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Settings.Default.Culture = sender == englishToolStripMenuItem ? new CultureInfo("en") : new CultureInfo("ru");
-            Settings.Default.Save();
-            Application.Restart();
-        }
-        
-        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }
