@@ -12,7 +12,6 @@ namespace RustWorkshopUploader
     {
         public static AppId RustAppId = 252490;
         public static AppId SdkAppId = 391750;
-        private static frmMain Form;
 
         /// <summary>
         ///     Главная точка входа для приложения.
@@ -29,7 +28,6 @@ namespace RustWorkshopUploader
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(Settings.Default.Culture.Name);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(Settings.Default.Culture.Name);
 
-            Form = new frmMain();
             DialogResult result;
             do
             {
@@ -50,7 +48,7 @@ namespace RustWorkshopUploader
 
             try
             {
-                Application.Run(Form);
+                Application.Run(new FrmMain());
             }
             catch (Exception e)
             {

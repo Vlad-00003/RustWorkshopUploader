@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace RustWorkshopUploader
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -33,7 +33,7 @@ namespace RustWorkshopUploader
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.txtFolder = new System.Windows.Forms.TextBox();
             this.btnSelectFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -244,7 +244,7 @@ namespace RustWorkshopUploader
             this.Icon = global::RustWorkshopUploader.Properties.Resources.favicon;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Closed);
             ((System.ComponentModel.ISupportInitialize)(this.txtWorkshopId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

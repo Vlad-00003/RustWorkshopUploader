@@ -12,12 +12,12 @@ using Steamworks.Ugc;
 
 namespace RustWorkshopUploader
 {
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
+        private CustomSkin _editing;
         private string _folderPath;
-        private CustomSkin Editing;
 
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent();
 
@@ -85,8 +85,8 @@ namespace RustWorkshopUploader
             File.Copy(openDialog.FileName, _folderPath + Path.DirectorySeparatorChar + "icon.png");
 
             var dataPath = GetDataPath(_folderPath);
-            Editing = File.Exists(dataPath) ? CustomSkin.FromFile(dataPath) : new CustomSkin();
-            Editing.FilePath = dataPath;
+            _editing = File.Exists(dataPath) ? CustomSkin.FromFile(dataPath) : new CustomSkin();
+            _editing.FilePath = dataPath;
             SetStatus(true);
             UpdateTexts();
         }
@@ -123,7 +123,7 @@ namespace RustWorkshopUploader
             }
 
             if (!File.Exists(ManifestPath))
-                File.WriteAllText(ManifestPath, Editing.ManifestText);
+                File.WriteAllText(ManifestPath, _editing.ManifestText);
 
             PublishToSteam();
         }
@@ -133,15 +133,14 @@ namespace RustWorkshopUploader
             ProgressBar.Value = 0;
             SetStatus(false);
 
-            var editor = default(Editor);
-            editor = Editing.ItemId == 0UL ? Editor.NewMicrotransactionFile : new Editor(Editing.ItemId);
+            var editor = _editing.ItemId == 0UL ? Editor.NewMicrotransactionFile : new Editor(_editing.ItemId);
 
             ProgressBar.Value = 20;
 
             editor = editor.ForAppId(Program.RustAppId).WithContent(_folderPath)
                 .WithPreviewFile(_folderPath + Path.DirectorySeparatorChar + "icon.png")
-                .WithTitle(Editing.Title).WithTag("Version3").WithTag("Skin")
-                .WithPublicVisibility().WithDescription(Editing.Description);
+                .WithTitle(_editing.Title).WithTag("Version3").WithTag("Skin")
+                .WithPublicVisibility().WithDescription(_editing.Description);
 
             ProgressBar.Value = 40;
             var publishResult = await editor.SubmitAsync();
@@ -169,15 +168,15 @@ namespace RustWorkshopUploader
             }
 
             ProgressBar.Value = 100;
-            Editing.Title = item.Value.Title;
-            Editing.Description = item.Value.Description;
-            Editing.ItemId = item.Value.Id;
-            Editing.Save();
+            _editing.Title = item.Value.Title;
+            _editing.Description = item.Value.Description;
+            _editing.ItemId = item.Value.Id;
+            _editing.Save();
             UpdateTexts();
             var result = MessageBox.Show(strings.Publish_OpenBrowser, strings.Message_Success, MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
             if (result == DialogResult.Yes)
-                Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
+                Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + _editing.ItemIdString);
             SetStatus(true);
         }
 
@@ -195,9 +194,9 @@ namespace RustWorkshopUploader
 
         private void btnDo_EnabledChanged(object sender, EventArgs e)
         {
-            if (btnDo.Enabled && Editing != null)
+            if (btnDo.Enabled && _editing != null)
             {
-                if (Editing.ItemId > 0)
+                if (_editing.ItemId > 0)
                     btnDo.Text = strings.BtnDo_Update;
                 else
                     btnDo.Text = strings.BtnDo_Upload;
@@ -237,12 +236,12 @@ namespace RustWorkshopUploader
         private void UpdateTexts()
         {
             _updating = true;
-            txtWorkshopId.Value = Editing.ItemId;
-            txtWorkshopName.Text = Editing.Title;
-            txtWorkshopDesc.Text = Editing.Description;
+            txtWorkshopId.Value = _editing.ItemId;
+            txtWorkshopName.Text = _editing.Title;
+            txtWorkshopDesc.Text = _editing.Description;
             txtFolder.Text = _folderPath;
 
-            if (Editing.ItemId > 0)
+            if (_editing.ItemId > 0)
                 btnDo.Text = strings.BtnDo_Update;
             else
                 btnDo.Text = strings.BtnDo_Upload;
@@ -263,19 +262,19 @@ namespace RustWorkshopUploader
             }
 
             if (!_updating)
-                Editing.ItemId = decimal.ToUInt64(txtWorkshopId.Value);
+                _editing.ItemId = decimal.ToUInt64(txtWorkshopId.Value);
         }
 
         private void txtWorkshopDesc_TextChanged(object sender, EventArgs e)
         {
             if (!_updating)
-                Editing.Description = txtWorkshopDesc.Text;
+                _editing.Description = txtWorkshopDesc.Text;
         }
 
         private void txtWorkshopName_TextChanged(object sender, EventArgs e)
         {
             if (!_updating)
-                Editing.Title = txtWorkshopName.Text;
+                _editing.Title = txtWorkshopName.Text;
         }
 
         #endregion
