@@ -254,10 +254,12 @@ namespace RustWorkshopUploader
         }
         private new void Closed(object sender, FormClosedEventArgs e)
         {
+#if !DEBUG
             if (MessageBox.Show(strings.AdvMessage, strings.AdvMessage_Title, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Process.Start("https://rustplugin.ru");
             }
+#endif
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
