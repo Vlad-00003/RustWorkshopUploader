@@ -1,7 +1,10 @@
 ﻿using RustWorkshopUploader.Localization;
 using Steamworks;
 using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
+using RustWorkshopUploader.Properties;
 
 namespace RustWorkshopUploader
 {
@@ -9,6 +12,7 @@ namespace RustWorkshopUploader
     {
         public static AppId RustAppId = 252490;
         public static AppId SdkAppId = 391750;
+        private static frmMain Form;
 
         /// <summary>
         ///     Главная точка входа для приложения.
@@ -19,6 +23,13 @@ namespace RustWorkshopUploader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Application.CurrentCulture = Settings.Default.Culture;
+            CultureInfo.DefaultThreadCurrentCulture = Settings.Default.Culture;
+            CultureInfo.DefaultThreadCurrentUICulture = Settings.Default.Culture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(Settings.Default.Culture.Name);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(Settings.Default.Culture.Name);
+
+            Form = new frmMain();
             DialogResult result;
             do
             {
@@ -38,7 +49,7 @@ namespace RustWorkshopUploader
 
             try
             {
-                Application.Run(new frmMain());
+                Application.Run(Form);
             }
             catch (Exception e)
             {

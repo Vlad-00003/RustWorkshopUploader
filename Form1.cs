@@ -1,10 +1,12 @@
 ﻿using RustWorkshopUploader.Classes;
 using RustWorkshopUploader.Localization;
+using RustWorkshopUploader.Properties;
 using Steamworks;
 using Steamworks.Ugc;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -261,25 +263,17 @@ namespace RustWorkshopUploader
             }
 #endif
         }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
+        
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Settings.Default.Culture = sender == englishToolStripMenuItem ? new CultureInfo("en") : new CultureInfo("ru");
+            Settings.Default.Save();
+            Application.Restart();
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-
+            Application.Exit();
         }
     }
 }
