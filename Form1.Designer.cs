@@ -239,7 +239,7 @@ namespace RustWorkshopUploader
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            this.Icon = Properties.Resources.favicon;
         }
 
         #endregion
