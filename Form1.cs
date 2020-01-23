@@ -1,11 +1,12 @@
-﻿using System;
+﻿using RustWorkshopUploader.Classes;
+using RustWorkshopUploader.Localization;
+using Steamworks;
+using Steamworks.Ugc;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using RustWorkshopUploader.Properties;
-using Steamworks;
-using Steamworks.Ugc;
 
 namespace RustWorkshopUploader
 {
@@ -29,7 +30,6 @@ namespace RustWorkshopUploader
             txtWorkshopId.Enabled = editing;
             txtWorkshopDesc.Enabled = editing;
             txtWorkshopName.Enabled = editing;
-            txtItemType.Enabled = editing;
             btnDo.Enabled = editing;
             button1.Enabled = editing;
         }
@@ -44,7 +44,7 @@ namespace RustWorkshopUploader
 
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
-            var openDialog = new OpenFileDialog {Filter = "Image Files(*.PNG)|*.PNG"};
+            var openDialog = new OpenFileDialog {Filter = @"Image Files(*.PNG)|*.PNG"};
 
             if (openDialog.ShowDialog() != DialogResult.OK)
                 return;
@@ -56,7 +56,7 @@ namespace RustWorkshopUploader
             }
             catch
             {
-                MessageBox.Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show(strings.Select_UnableToOpen, strings.Message_Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 SetStatus(false);
                 return;
@@ -64,7 +64,7 @@ namespace RustWorkshopUploader
 
             if (image.Width != 512 && image.Height != 512)
             {
-                MessageBox.Show("Размер изображения должен быть 512x512", "Image size error!", MessageBoxButtons.OK,
+                MessageBox.Show(strings.Select_WrongResolution, strings.Message_Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 SetStatus(false);
                 return;
@@ -101,28 +101,21 @@ namespace RustWorkshopUploader
         {
             if (string.IsNullOrEmpty(_folderPath))
             {
-                MessageBox.Show("Вы не выбрали изображение!", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show(strings.Do_NoImage, strings.Message_Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
 
             if (string.IsNullOrEmpty(txtWorkshopName.Text))
             {
-                MessageBox.Show("Вы должны указать имя для скина!", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show(strings.Do_NoName, strings.Message_Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
 
             if (string.IsNullOrEmpty(txtWorkshopDesc.Text))
             {
-                MessageBox.Show("Вы должны указать описание для скина!", "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-
-            if (string.IsNullOrEmpty(txtItemType.Text))
-            {
-                MessageBox.Show("Вы не указали тип предмета", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show(strings.Do_NoDescription, strings.Message_Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
@@ -145,7 +138,7 @@ namespace RustWorkshopUploader
 
             editor = editor.ForAppId(Program.RustAppId).WithContent(_folderPath)
                 .WithPreviewFile(_folderPath + Path.DirectorySeparatorChar + "icon.png")
-                .WithTitle(Editing.Title).WithTag("Version3").WithTag(Editing.ItemType).WithTag("Skin")
+                .WithTitle(Editing.Title).WithTag("Version3").WithTag("Skin")
                 .WithPublicVisibility().WithDescription(Editing.Description);
 
             ProgressBar.Value = 40;
@@ -155,7 +148,7 @@ namespace RustWorkshopUploader
             if (!publishResult.Success)
             {
                 ProgressBar.Value = 0;
-                MessageBox.Show("Error: " + publishResult.Result, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(strings.ErrorText, publishResult.Result), strings.Message_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SetStatus(true);
                 return;
             }
@@ -166,7 +159,7 @@ namespace RustWorkshopUploader
             if (item == null)
             {
                 ProgressBar.Value = 0;
-                MessageBox.Show("Unable to retrieve information from Steam ", "ERROR", MessageBoxButtons.OK,
+                MessageBox.Show(strings.Publish_RetreiveFailed, strings.Message_Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 SetStatus(true);
                 return;
@@ -178,7 +171,7 @@ namespace RustWorkshopUploader
             Editing.ItemId = item.Value.Id;
             Editing.Save();
             UpdateTexts();
-            var result = MessageBox.Show("Файл успешно загружен в мастерскую!\nОткрыть ссылку в браузере?", "УСПЕШНО", MessageBoxButtons.YesNo,
+            var result = MessageBox.Show(strings.Publish_OpenBrowser, strings.Message_Success, MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
             if(result == DialogResult.Yes)
                 Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + Editing.ItemIdString);
@@ -194,7 +187,7 @@ namespace RustWorkshopUploader
         private void button1_Click(object sender, EventArgs e)
         {
             txtWorkshopId.Value = 0ul;
-            btnDo.Text = "ЗАГРУЗИТЬ";
+            btnDo.Text = strings.BtnDo_Upload;
         }
 
         #region Field updates
@@ -207,13 +200,12 @@ namespace RustWorkshopUploader
             txtWorkshopId.Value = Editing.ItemId;
             txtWorkshopName.Text = Editing.Title;
             txtWorkshopDesc.Text = Editing.Description;
-            txtItemType.Text = Editing.ItemType;
             txtFolder.Text = _folderPath;
 
             if (Editing.ItemId > 0)
-                btnDo.Text = "ОБНОВИТЬ";
+                btnDo.Text = strings.BtnDo_Update;
             else
-                btnDo.Text = "ЗАГРУЗИТЬ";
+                btnDo.Text = strings.BtnDo_Upload;
             _updating = false;
         }
 
@@ -239,13 +231,7 @@ namespace RustWorkshopUploader
             if (!_updating)
                 Editing.Description = txtWorkshopDesc.Text;
         }
-
-        private void txtItemType_TextChanged(object sender, EventArgs e)
-        {
-            if (!_updating)
-                Editing.ItemType = txtItemType.Text;
-        }
-
+        
         private void txtWorkshopName_TextChanged(object sender, EventArgs e)
         {
             if (!_updating)
@@ -259,16 +245,16 @@ namespace RustWorkshopUploader
             if (btnDo.Enabled && Editing != null)
             {
                 if (Editing.ItemId > 0)
-                    btnDo.Text = "ОБНОВИТЬ";
+                    btnDo.Text = strings.BtnDo_Update;
                 else
-                    btnDo.Text = "ЗАГРУЗИТЬ";
+                    btnDo.Text = strings.BtnDo_Upload;
                 return;
             }
-            btnDo.Text = "ЗАГРУЗКА...";
+            btnDo.Text = strings.BtnDo_Uploading;
         }
         private new void Closed(object sender, FormClosedEventArgs e)
         {
-            if (MessageBox.Show("Мы занимаемся разработкой приватных плагинов, так же и продаем их. Хотите посетить сайт нашего сообщества?", "Выгодное предложение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(strings.AdvMessage, strings.AdvMessage_Title, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Process.Start("https://rustplugin.ru");
             }

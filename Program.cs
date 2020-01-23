@@ -1,6 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using RustWorkshopUploader.Localization;
 using Steamworks;
+using System;
+using System.Windows.Forms;
 
 namespace RustWorkshopUploader
 {
@@ -28,7 +29,7 @@ namespace RustWorkshopUploader
                 }
                 catch (Exception)
                 {
-                    result = MessageBox.Show("Steam is not running!", "ERROR", MessageBoxButtons.RetryCancel,
+                    result = MessageBox.Show(strings.SteamNotFound, strings.Message_Error, MessageBoxButtons.RetryCancel,
                         MessageBoxIcon.Error);
                     if (result == DialogResult.Cancel)
                         return;
@@ -41,7 +42,7 @@ namespace RustWorkshopUploader
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Application error: {e}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(strings.AppError, e), strings.Message_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

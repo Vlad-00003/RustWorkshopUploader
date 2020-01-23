@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RustWorkshopUploader.Localization;
+using Steamworks;
+using System;
 using System.IO;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Rust.Workshop;
-using Steamworks;
 
-namespace RustWorkshopUploader
+namespace RustWorkshopUploader.Classes
 {
     internal class CustomSkin
     {
@@ -15,27 +15,13 @@ namespace RustWorkshopUploader
         public string FilePath;
 
         public ulong ItemId;
-        public string ItemType;
         public string Title;
-
-        public CustomSkin()
-        {
-            ItemType = "TShirt";
-        }
-
+        
         [JsonIgnore]
         public string ItemIdString => ItemId.ToString();
 
         [JsonIgnore]
-        public Skin.Manifest Manifest =>
-            new Skin.Manifest
-            {
-                ItemType = ItemType,
-                Version = 3,
-                Groups = new Skin.Manifest.Group[1],
-                PublishDate = DateTime.UtcNow,
-                AuthorId = SteamClient.SteamId
-            };
+        public Manifest Manifest => Manifest.DefaultManifest.WithData(DateTime.UtcNow, SteamClient.SteamId);
 
         [JsonIgnore]
         public string ManifestText => JsonConvert.SerializeObject(Manifest, Formatting.Indented);
@@ -70,7 +56,7 @@ namespace RustWorkshopUploader
             catch (Exception ex)
             {
                 skin = new CustomSkin();
-                MessageBox.Show($"Failed to Deserialize file {path} as CustomSkin!\n{ex}", "ERROR",
+                MessageBox.Show(string.Format(strings.CustomSkin_DeserializationFailed, path, ex), strings.Message_Error,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
