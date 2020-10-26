@@ -187,4 +187,7 @@ Open workshop page?</value>
     <value>You should set the description!</value>
     <comment>Вы должны указать описание для скина!</comment>
   </data>
+  <data name="NeedsWorkshopAgreement" xml:space="preserve">
+    <value>You have to accept Steam Subscriber Agreement, would you like to do it now?</value>
+  </data>
 </root>

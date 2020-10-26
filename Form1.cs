@@ -149,8 +149,21 @@ namespace RustWorkshopUploader
             if (!publishResult.Success)
             {
                 ProgressBar.Value = 0;
-                MessageBox.Show(string.Format(strings.ErrorText, publishResult.Result), strings.Message_Error,
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if(publishResult.NeedsWorkshopAgreement)
+                {
+                    if (MessageBox.Show(string.Format(strings.ErrorText, strings.NeedsWorkshopAgreement),
+                            strings.Message_Error, MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    {
+                        
+                        Process.Start($"https://steamcommunity.com/workshop/workshoplegalagreement/?l={(IsEnglish ?"english":"russian") }");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(string.Format(strings.ErrorText, publishResult.Result), strings.Message_Error,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 SetStatus(true);
                 return;
             }
@@ -183,6 +196,7 @@ namespace RustWorkshopUploader
         private void txtWorkshopId_DoubleClick(object sender, EventArgs e)
         {
             if (txtWorkshopId.Value == 0) return;
+            //steam://url/CommunityFilePage/<PublishedFileId_t>
             Process.Start("http://steamcommunity.com/sharedfiles/filedetails/?id=" + txtWorkshopId.Text);
         }
 
@@ -196,10 +210,7 @@ namespace RustWorkshopUploader
         {
             if (btnDo.Enabled && _editing != null)
             {
-                if (_editing.ItemId > 0)
-                    btnDo.Text = strings.BtnDo_Update;
-                else
-                    btnDo.Text = strings.BtnDo_Upload;
+                btnDo.Text = _editing.ItemId > 0 ? strings.BtnDo_Update : strings.BtnDo_Upload;
                 return;
             }
 
@@ -216,6 +227,7 @@ namespace RustWorkshopUploader
 #endif
         }
 
+        private bool IsEnglish => Settings.Default.Culture.Name == "en";
         private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings.Default.Culture =

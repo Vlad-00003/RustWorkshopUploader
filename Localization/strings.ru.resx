@@ -173,4 +173,7 @@
   <data name="Do_NoDescription" xml:space="preserve">
     <value>Вы должны указать описание для скина!</value>
   </data>
+  <data name="NeedsWorkshopAgreement" xml:space="preserve">
+    <value>Вам необходимо принять соглашение подписчика Steam, хотите сделать это сейчас?</value>
+  </data>
 </root>

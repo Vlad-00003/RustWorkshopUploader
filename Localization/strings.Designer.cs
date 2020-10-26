@@ -179,6 +179,15 @@ namespace RustWorkshopUploader.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на You have to accept Steam Subscriber Agreement, would you like to do it now?.
+        /// </summary>
+        internal static string NeedsWorkshopAgreement {
+            get {
+                return ResourceManager.GetString("NeedsWorkshopAgreement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Entry upload complete!
         ///Open workshop page?.
         /// </summary>
