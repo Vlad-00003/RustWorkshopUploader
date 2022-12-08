@@ -68,7 +68,7 @@
     <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <Reference Include="Facepunch.Steamworks.Win64">
       <HintPath>Dependencies\Facepunch.Steamworks.Win64.dll</HintPath>
     </Reference>
